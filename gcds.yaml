@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dsemulator-service
+spec:
+  type: NodePort
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 8181
+    nodePort: 31001
+  selector:
+    app: dsemulator
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dsemulator-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dsemulator
+    spec:
+      containers:
+      - name: dsemulator
+        image: vyper/gcd-grpc
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8181
