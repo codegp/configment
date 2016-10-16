@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codegp-config
+  namespace: default
+data:
+  gcloud-project-id: codegp
+  is-local: 'true'
+  datastore-emulator-host: '10.0.0.181:80'
