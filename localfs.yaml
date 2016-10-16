@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: localfs
-        image: codegp/localfs
+        image: local/codegp/localfs
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
