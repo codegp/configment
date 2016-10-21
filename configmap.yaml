@@ -1,0 +1,29 @@
+---
+kind: "Template"
+apiVersion: "v1"
+objects:
+ -  apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: codegp-config
+      namespace: default
+    data:
+      gcloud-project-id: $(GCLOUD_PROJECT_ID)
+      is-local: $(IS_LOCAL)
+      datastore-emulator-host: $(DATASTORE_EMULATOR_HOST)
+parameters:
+- name: "GCLOUD_PROJECT_ID"
+  description: "gcloud project id "
+  value: "local"
+  required: false
+  parameterType: "string"
+- name: "IS_LOCAL"
+  description: "local configuration"
+  value: true
+  required: false
+  parameterType: "bool"
+- name: "DATASTORE_EMULATOR_HOST"
+  description: "datastore-emulator-host"
+  value: ""
+  required: false
+  parameterType: "string"

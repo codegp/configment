@@ -1,0 +1,32 @@
+---
+kind: "Template"
+apiVersion: "v1"
+objects:
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: app-client-deployment
+    spec:
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: app-client
+        spec:
+          containers:
+          - name: app-client
+            image: gcr.io/$(GCLOUD_PROJECT_ID)/app-client:$(TAG)
+            imagePullPolicy: IfNotPresent
+            ports:
+            - containerPort: 80
+parameters:
+  - name: "GCLOUD_PROJECT_ID"
+    description: "gcloud project id "
+    value: "local"
+    required: false
+    parameterType: "string"
+  - name: "TAG"
+    description: "image tag"
+    value: "latest"
+    required: false
+    parameterType: "string"
