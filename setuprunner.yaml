@@ -1,0 +1,55 @@
+---
+kind: "Template"
+apiVersion: "v1"
+objects:
+ -  apiVersion: v1
+    kind: Pod
+    metadata:
+      generateName: "setuprunner"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: setuprunner
+        image: gcr.io/$(GCLOUD_PROJECT_ID)/setuprunner
+        command: ["./setuprunner",  "-r=$(RUN_GAME)", "-fb=$(FORCE_BUILD)"]
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: GCLOUD_PROJECT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: codegp-config
+              key: gcloud-project-id
+        - name: IS_LOCAL
+          valueFrom:
+            configMapKeyRef:
+              name: codegp-config
+              key: is-local
+        - name: DATASTORE_EMULATOR_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: codegp-config
+              key: datastore-emulator-host
+        volumeMounts:
+        - mountPath: /localstore
+          name: localstore-volume
+          readOnly: false
+      volumes:
+      - name: localstore-volume
+        hostPath:
+          path: /localstore
+parameters:
+- name: "RUN_GAME"
+  description: "should run a test game"
+  value: false
+  required: false
+  parameterType: "bool"
+- name: "FORCE_BUILD"
+  description: "should build game type even if it already exists"
+  value: false
+  required: false
+  parameterType: "bool"
+- name: "GCLOUD_PROJECT_ID"
+  description: "gcloud project id "
+  value: "local"
+  required: false
+  parameterType: "string"

@@ -10,7 +10,6 @@ func main() {
 func crossOrigin(h http.Handler) http.HandlerFunc {
 
 	return func(rw http.ResponseWriter, req *http.Request) {
-		println("HI")
 		rw.Header().Set("Access-Control-Allow-Origin", "*")
 		rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 		rw.Header().Set("Access-Control-Allow-Headers",
@@ -19,7 +18,7 @@ func crossOrigin(h http.Handler) http.HandlerFunc {
 		if req.Method == "OPTIONS" {
 			return
 		}
-		// Lets Gorilla work
+
 		h.ServeHTTP(rw, req)
 	}
 }
