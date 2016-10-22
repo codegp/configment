@@ -40,7 +40,7 @@ fi
 
 eval $(minikube docker-env)
 
-if dvm current | grep -q '1.11.1'; then
+if ! dvm current | grep -q '1.11.1'; then
   dvm use 1.11.1
 fi
 
@@ -100,3 +100,6 @@ if ! kubectl get pods | grep -q app-client; then
     -p TAG $CLIENT_TAG \
     -p GCLOUD_PROJECT_ID $PROJECT_ID | kubectl create -f -
 fi
+
+echo "setting up test models"
+ktmpl setuprunner.yaml -p GCLOUD_PROJECT_ID $PROJECT_ID | kubectl create -f -
