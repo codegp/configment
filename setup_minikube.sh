@@ -74,7 +74,7 @@ fi
 DATASTORE_EMULATOR_HOST=$(kubectl get -o json service dsemulator-service  | jq -r '.spec.clusterIP')
 if ! kubectl get configmaps | grep -q codegp-config; then
   echo "Setting minikube configuration with ds ip of $DATASTORE_EMULATOR_HOST:80"
-  ktmpl configmap.yaml -p DATASTORE_EMULATOR_HOST $DATASTORE_EMULATOR_HOST:80 | kubectl create -f -
+  ktmpl configmap.yaml -p GCLOUD_PROJECT_ID $PROJECT_ID -p DATASTORE_EMULATOR_HOST $DATASTORE_EMULATOR_HOST:80 | kubectl create -f -
 fi
 
 if ! kubectl get services | grep -q app-server; then

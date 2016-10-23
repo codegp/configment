@@ -14,8 +14,8 @@ objects:
 parameters:
 - name: "GCLOUD_PROJECT_ID"
   description: "gcloud project id "
-  value: "local"
-  required: false
+  value: "foo"
+  required: true
   parameterType: "string"
 - name: "IS_LOCAL"
   description: "local configuration"
